@@ -1,0 +1,22 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://xmlns.oracle.com/SBGoogleRESTAPI/TokenManagement/OAuth20" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="OAuth20">RestReference</doc>
+   <grammars>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.qualogy.com/blog/mnuman/RESTOAuth" schemaLocation="../Schemas/GoogleAuthorization.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/oauth2/v4/token">
+         <method name="POST" soa:wsdlOperation="RedeemAuthorizationCode">
+            <doc title="POST RedeemAuthorizationCode">Redeem a one-time authorization code for an access token and a refresh token.</doc>
+            <request>
+               <representation mediaType="application/json" element="cns:OAuthRedeemAuthorizationCodeRequest" xmlns:cns="http://www.qualogy.com/blog/mnuman/RESTOAuth"/>
+            </request>
+            <response>
+               <representation mediaType="application/json" element="cns:OAuthTokenResponse" xmlns:cns="http://www.qualogy.com/blog/mnuman/RESTOAuth"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

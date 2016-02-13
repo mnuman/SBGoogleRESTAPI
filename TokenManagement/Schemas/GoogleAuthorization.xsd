@@ -1,0 +1,51 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            xmlns:tns="http://www.qualogy.com/blog/mnuman/RESTOAuth"
+            targetNamespace="http://www.qualogy.com/blog/mnuman/RESTOAuth" elementFormDefault="qualified" attributeFormDefault="unqualified" nxsd:encoding="UTF-8">
+
+
+  <xsd:element name="OAuthRedeemAuthorizationCodeRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="code" type="xsd:string"/>
+        <xsd:element name="client_id" type="xsd:string"/>
+        <xsd:element name="client_secret" type="xsd:string"/>
+        <xsd:element name="redirect_uri" type="xsd:string"/>
+        <xsd:element name="grant_type" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+   <xsd:element name="OAuthTokenResponse">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="access_token" type="xsd:string"/>
+            <xsd:element name="token_type" type="xsd:string"/>
+            <xsd:element name="expires_in" type="xsd:integer"/>
+            <xsd:element name="refresh_token" type="xsd:string" minOccurs="0"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+  <xsd:element name="OAuthRefreshTokenRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="client_id" type="xsd:string"/>
+        <xsd:element name="client_secret" type="xsd:string"/>
+        <xsd:element name="grant_type" type="xsd:string"/>
+        <xsd:element name="refresh_token" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+   <xsd:element name="Error">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="error" type="xsd:string"/>
+            <xsd:element name="error_description" type="xsd:string"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+  
+<xsd:annotation>
+      <xsd:appinfo>NXSDSAMPLE=</xsd:appinfo>
+      <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+   </xsd:annotation>
+</xsd:schema>

@@ -1,0 +1,15 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/coherence/SBGoogleRESTAPI/TokenManagement/putTokenInCache" name="putTokenInCache-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="putTokenInCache.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/coherence/SBGoogleRESTAPI/TokenManagement/putTokenInCache"/>
+    <wsdl:binding name="Put_ptt-binding" type="put:Put_ptt" xmlns:put="http://xmlns.oracle.com/pcbpel/adapter/coherence/SBGoogleRESTAPI/TokenManagement/putTokenInCache">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="Put">
+            <soap:operation soapAction="Put"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

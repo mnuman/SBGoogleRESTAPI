@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:qoa="http://xmlns.qualogy.com/blog/mnuman/OAuth"
+            targetNamespace="http://xmlns.qualogy.com/blog/mnuman/OAuth" elementFormDefault="qualified">
+  <xsd:element name="RedeemAuthorizationTokenResponse" type="qoa:TokenResponse"/>
+  <xsd:element name="RedeemAuthorizationTokenRequest" type="qoa:RedeemAuthorizationTokenRequest">
+    <xsd:annotation>
+      <xsd:documentation>A sample element</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="RefreshAccessTokenRequest" type="qoa:TokenRequest"/>
+  <xsd:element name="RefreshAccessTokenResponse" type="qoa:TokenResponse"/>
+  <xsd:element name="GetAccessTokenRequest" type="qoa:TokenRequest"/>
+  <xsd:element name="GetAccessTokenResponse" type="qoa:TokenResponse"/>
+  <xsd:element name="CacheToken" type="qoa:CacheToken"/>
+  <xsd:complexType name="RedeemAuthorizationTokenRequest">
+    <xsd:sequence>
+      <xsd:element name="Issuer" type="xsd:string"/>
+      <xsd:element name="Owner" type="xsd:string"/>
+      <xsd:element name="AuthorizationCode" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TokenResponse">
+    <xsd:sequence>
+      <xsd:element name="AccessToken" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TokenRequest">
+    <xsd:sequence>
+      <xsd:element name="Issuer" type="xsd:string"/>
+      <xsd:element name="Owner" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CacheToken">
+    <xsd:sequence>
+      <xsd:element name="AccessToken" type="xsd:string"/>
+      <xsd:element name="RefreshToken" type="xsd:string"/>
+      <xsd:element name="ExpiresAfter" type="xsd:dateTime"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

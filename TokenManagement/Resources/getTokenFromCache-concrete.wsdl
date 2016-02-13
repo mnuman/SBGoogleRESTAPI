@@ -1,0 +1,15 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/coherence/SBGoogleRESTAPI/TokenManagement/getTokenFromCache" name="getTokenFromCache-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="getTokenFromCache.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/coherence/SBGoogleRESTAPI/TokenManagement/getTokenFromCache"/>
+    <wsdl:binding name="Get_ptt-binding" type="get:Get_ptt" xmlns:get="http://xmlns.oracle.com/pcbpel/adapter/coherence/SBGoogleRESTAPI/TokenManagement/getTokenFromCache">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="Get">
+            <soap:operation soapAction="Get"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>
