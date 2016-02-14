@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="TokenManagement/Resources/OAuth20"/>
+            <con:binding>
+                <con:name>OAuth20SOAPBinding</con:name>
+                <con:namespace>http://xmlns.oracle.com/OAuth</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N3f57c7ff.62ac1734.0.152df9237e5.N7ff6">
+            <con:stage id="_StageId-N3f57c7ff.62ac1734.0.152df9237e5.N7ff4" name="Stage1">
+                <con:context>
+                    <con2:userNsDecl prefix="qoa" namespace="http://xmlns.qualogy.com/blog/mnuman/OAuth"/>
+                </con:context>
+                <con:actions>
+                    <con3:wsCallout>
+                        <con2:id>_ActionId-N3f57c7ff.62ac1734.0.152df9237e5.N7ff0</con2:id>
+                        <con3:service ref="TokenManagement/BusinessServices/getTokenFromCache" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con3:operation>Get</con3:operation>
+                        <con3:request>
+                            <con3:body wrapped="false">xml_GetTokenRequest</con3:body>
+                        </con3:request>
+                        <con3:response>
+                            <con3:body wrapped="false">xml_GetTokenResponse</con3:body>
+                        </con3:response>
+                        <con3:requestTransform>
+                            <con3:transport-headers>
+                                <con2:id>_ActionId-N3f57c7ff.62ac1734.0.152df9237e5.N7fed</con2:id>
+                                <con3:header-set>outbound-request</con3:header-set>
+                                <con3:header value="expression" name="jca.coherence.Key">
+                                    <con2:xqueryText>concat($xml_InboundRequest//qoa:Issuer,$xml_InboundRequest//qoa:Owner)</con2:xqueryText>
+                                </con3:header>
+                            </con3:transport-headers>
+                        </con3:requestTransform>
+                        <con3:responseTransform/>
+                    </con3:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57c7ff.62ac1734.0.152df9237e5.N7ff5">
+            <con:stage id="_StageId-N3f57c7ff.62ac1734.0.152df9237e5.N7ff3" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con4:route>
+                        <con2:id>_ActionId-N3f57c7ff.62ac1734.0.152df9237e5.N7fe6</con2:id>
+                        <con4:service ref="TokenManagement/BusinessServices/putTokenInCache" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:operation>Put</con4:operation>
+                        <con4:outboundTransform>
+                            <con3:replace varName="body" contents-only="true">
+                                <con2:id>_ActionId-N3f57c7ff.62ac1734.0.152df9237e5.N7fe3</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryText>$xml_GetTokenResponse</con2:xqueryText>
+                                </con3:expr>
+                            </con3:replace>
+                            <con3:replace varName="body" contents-only="true">
+                                <con2:id>_ActionId-N3f57c7ff.62ac1734.0.152df9237e5.N7fe0</con2:id>
+                                <con3:location>
+                                    <con2:xpathText>./AccessToken</con2:xpathText>
+                                </con3:location>
+                                <con3:expr>
+                                    <con2:xqueryText>$str_AccessToken</con2:xqueryText>
+                                </con3:expr>
+                            </con3:replace>
+                            <con3:transport-headers>
+                                <con2:id>_ActionId-N3f57c7ff.62ac1734.0.152df9237e5.N7fd7</con2:id>
+                                <con3:header-set>outbound-request</con3:header-set>
+                                <con3:header value="expression" name="jca.coherence.Key">
+                                    <con2:xqueryText>concat($xml_InboundRequest//Issuer, $xml_InboundRequest//Owner)</con2:xqueryText>
+                                </con3:header>
+                            </con3:transport-headers>
+                        </con4:outboundTransform>
+                    </con4:route>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelinePairNode1">
+                <con:request>request-N3f57c7ff.62ac1734.0.152df9237e5.N7ff6</con:request>
+                <con:response>response-N3f57c7ff.62ac1734.0.152df9237e5.N7ff5</con:response>
+            </con:pipeline-node>
+            <con:route-node name="RouteNode1">
+                <con:context/>
+                <con:actions>
+                    <con1:route>
+                        <con2:id>_ActionId-N3f57c7ff.2017dccf.0.152dc5ac7d8.N7ff6</con2:id>
+                        <con1:service ref="TokenManagement/BusinessServices/OAuth20RefreshAccessToken" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>RefreshAccessToken</con1:operation>
+                        <con1:outboundTransform>
+                            <con3:replace varName="body" contents-only="true">
+                                <con2:id>_ActionId-N3f57c7ff.62ac1734.0.152df9237e5.N7fea</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryTransform>
+                                        <con2:resource ref="TokenManagement/Transformations/TransformRefreshTokenRequest"/>
+                                        <con2:param name="refreshToken">
+                                            <con2:path>data($xml_GetTokenResponse//RefreshToken)</con2:path>
+                                        </con2:param>
+                                    </con2:xqueryTransform>
+                                </con3:expr>
+                            </con3:replace>
+                        </con1:outboundTransform>
+                        <con1:responseTransform>
+                            <con3:replace contents-only="true" varName="body">
+                                <con2:id>_ActionId-N3f57c7ff.62ac1734.0.152df9237e5.N7fdd</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryTransform>
+                                        <con2:resource ref="TokenManagement/Transformations/TransformRefreshTokenReply"/>
+                                        <con2:param name="refreshTokenResponse">
+                                            <con2:path>$body/*[1]</con2:path>
+                                        </con2:param>
+                                    </con2:xqueryTransform>
+                                </con3:expr>
+                            </con3:replace>
+                            <con3:assign varName="str_AccessToken">
+                                <con2:id>_ActionId-N3f57c7ff.62ac1734.0.152df9237e5.N7fda</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryText>data($body//*:access_token)</con2:xqueryText>
+                                </con3:expr>
+                            </con3:assign>
+                        </con1:responseTransform>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+        <con:shared-variables>
+            <con:variable>xml_InboundRequest</con:variable>
+        </con:shared-variables>
+    </con:router>
+</con:pipelineEntry>
