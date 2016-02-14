@@ -11,7 +11,11 @@ declare function local:func($operation as xs:string) {
          <namespaceURI>http://xmlns.qualogy.com/blog/mnuman/OAuth</namespaceURI>      
          <localname>{ if ($operation = 'RedeemAuthorizationCode')
                       then 'RedeemAuthorizationTokenRequest'
-                      else 'TokenRequest'
+                      else if ($operation = 'RefreshAccessToken') 
+                           then 'RefreshAccessTokenRequest'
+                           else if ($operation = 'GetAccessToken')
+                                then 'GetAccessTokenRequest'
+                                else 'CANNOTBEPROCESSED'
                     }
         </localname>
      </schemaElement>

@@ -12,7 +12,7 @@
             <con:snippetVersion>1.0</con:snippetVersion>
         </con:xqConfiguration>
     </con:coreEntry>
-    <con:router>
+    <con:router errorHandler="error-N3f57c7ff.71089dea.0.152e19d7668.N7f65">
         <con:pipeline type="request" name="request-N3f57c7ff.62ac1734.0.152df9237e5.N7ff6">
             <con:stage id="_StageId-N3f57c7ff.62ac1734.0.152df9237e5.N7ff4" name="Stage1">
                 <con:context>
@@ -42,10 +42,34 @@
                     </con3:wsCallout>
                 </con:actions>
             </con:stage>
+            <con:stage id="_StageId-N3f57c7ff.N973d28c.0.152e18bf09a.N7ff1" name="Stage2">
+                <con:context>
+                    <con2:userNsDecl prefix="qoa" namespace="http://xmlns.qualogy.com/blog/mnuman/OAuth"/>
+                </con:context>
+                <con:actions>
+                    <con3:ifThenElse>
+                        <con2:id>_ActionId-N3f57c7ff.71089dea.0.152e19d7668.N7fca</con2:id>
+                        <con3:case id="_BranchId-N3f57c7ff.71089dea.0.152e19d7668.N7fc9">
+                            <con3:condition>
+                                <con2:xqueryText>string-length($xml_GetTokenResponse/qoa:RefreshToken) = 0</con2:xqueryText>
+                            </con3:condition>
+                            <con3:actions>
+                                <con3:Error>
+                                    <con2:id>_ActionId-N3f57c7ff.71089dea.0.152e19d7668.N7f96</con2:id>
+                                    <con3:errCode>OAUTH-GOOGLE-NO-REFRESH-TOKEN</con3:errCode>
+                                    <con3:message>Refresh token not found.</con3:message>
+                                </con3:Error>
+                            </con3:actions>
+                        </con3:case>
+                    </con3:ifThenElse>
+                </con:actions>
+            </con:stage>
         </con:pipeline>
         <con:pipeline type="response" name="response-N3f57c7ff.62ac1734.0.152df9237e5.N7ff5">
             <con:stage id="_StageId-N3f57c7ff.62ac1734.0.152df9237e5.N7ff3" name="Stage1">
-                <con:context/>
+                <con:context>
+                    <con2:userNsDecl prefix="qoa" namespace="http://xmlns.qualogy.com/blog/mnuman/OAuth"/>
+                </con:context>
                 <con:actions>
                     <con4:route>
                         <con2:id>_ActionId-N3f57c7ff.62ac1734.0.152df9237e5.N7fe6</con2:id>
@@ -61,21 +85,49 @@
                             <con3:replace varName="body" contents-only="true">
                                 <con2:id>_ActionId-N3f57c7ff.62ac1734.0.152df9237e5.N7fe0</con2:id>
                                 <con3:location>
-                                    <con2:xpathText>./AccessToken</con2:xpathText>
+                                    <con2:xpathText>./qoa:CacheToken/qoa:AccessToken</con2:xpathText>
                                 </con3:location>
                                 <con3:expr>
                                     <con2:xqueryText>$str_AccessToken</con2:xqueryText>
+                                </con3:expr>
+                            </con3:replace>
+                            <con3:replace varName="body" contents-only="true">
+                                <con2:id>_ActionId-N3f57c7ff.N973d28c.0.152e18bf09a.N7ffb</con2:id>
+                                <con3:location>
+                                    <con2:xpathText>./qoa:CacheToken/qoa:ExpiresAfter</con2:xpathText>
+                                </con3:location>
+                                <con3:expr>
+                                    <con2:xqueryText>fn:current-dateTime()+xs:dayTimeDuration("PT3600S")</con2:xqueryText>
                                 </con3:expr>
                             </con3:replace>
                             <con3:transport-headers>
                                 <con2:id>_ActionId-N3f57c7ff.62ac1734.0.152df9237e5.N7fd7</con2:id>
                                 <con3:header-set>outbound-request</con3:header-set>
                                 <con3:header value="expression" name="jca.coherence.Key">
-                                    <con2:xqueryText>concat($xml_InboundRequest//Issuer, $xml_InboundRequest//Owner)</con2:xqueryText>
+                                    <con2:xqueryText>concat($xml_InboundRequest//qoa:Issuer, $xml_InboundRequest//qoa:Owner)</con2:xqueryText>
                                 </con3:header>
                             </con3:transport-headers>
                         </con4:outboundTransform>
                     </con4:route>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-N3f57c7ff.71089dea.0.152e19d7668.N7f65">
+            <con:stage id="_StageId-N3f57c7ff.71089dea.0.152e19d7668.N7f64" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con3:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-N3f57c7ff.71089dea.0.152e19d7668.N7ebe</con2:id>
+                        <con3:expr>
+                            <con2:xqueryText><![CDATA[<soap-env:Fault>
+  <faultcode>{data($fault/ctx:errorCode)}</faultcode>
+  <faulstring>{data($fault/ctx:reason)}</faulstring>
+</soap-env:Fault>]]></con2:xqueryText>
+                        </con3:expr>
+                    </con3:replace>
+                    <con2:reply isError="true">
+                        <con2:id>_ActionId-N3f57c7ff.71089dea.0.152e19d7668.N7f61</con2:id>
+                    </con2:reply>
                 </con:actions>
             </con:stage>
         </con:pipeline>
@@ -85,7 +137,9 @@
                 <con:response>response-N3f57c7ff.62ac1734.0.152df9237e5.N7ff5</con:response>
             </con:pipeline-node>
             <con:route-node name="RouteNode1">
-                <con:context/>
+                <con:context>
+                    <con2:userNsDecl prefix="qoa" namespace="http://xmlns.qualogy.com/blog/mnuman/OAuth"/>
+                </con:context>
                 <con:actions>
                     <con1:route>
                         <con2:id>_ActionId-N3f57c7ff.2017dccf.0.152dc5ac7d8.N7ff6</con2:id>
@@ -98,7 +152,7 @@
                                     <con2:xqueryTransform>
                                         <con2:resource ref="TokenManagement/Transformations/TransformRefreshTokenRequest"/>
                                         <con2:param name="refreshToken">
-                                            <con2:path>data($xml_GetTokenResponse//RefreshToken)</con2:path>
+                                            <con2:path>data($xml_GetTokenResponse/qoa:RefreshToken)</con2:path>
                                         </con2:param>
                                     </con2:xqueryTransform>
                                 </con3:expr>
@@ -119,7 +173,7 @@
                             <con3:assign varName="str_AccessToken">
                                 <con2:id>_ActionId-N3f57c7ff.62ac1734.0.152df9237e5.N7fda</con2:id>
                                 <con3:expr>
-                                    <con2:xqueryText>data($body//*:access_token)</con2:xqueryText>
+                                    <con2:xqueryText>data($body/qoa:RefreshAccessTokenResponse/qoa:AccessToken)</con2:xqueryText>
                                 </con3:expr>
                             </con3:assign>
                         </con1:responseTransform>

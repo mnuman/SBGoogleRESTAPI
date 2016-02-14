@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://xmlns.oracle.com/SBGoogleRESTAPI/TokenManagement/OAuth20RefreshAccessToken" xmlns="http://wadl.dev.java.net/2009/02">
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://xmlns.oracle.com/SBGoogleRESTAPI/TokenManagement/OAuth20RefreshAccessToken" xmlns="http://wadl.dev.java.net/2009/02" xmlns:inp1="http://www.qualogy.com/blog/mnuman/RESTOAuth">
    <doc title="OAuth20RefreshAccessToken">RestReference</doc>
    <grammars>
       <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
@@ -10,7 +10,11 @@
       <resource path="/oauth2/v4/token">
          <method name="POST" soa:wsdlOperation="RefreshAccessToken">
             <request>
-               <representation mediaType="application/json" element="cns:OAuthRefreshTokenRequest" xmlns:cns="http://www.qualogy.com/blog/mnuman/RESTOAuth"/>
+               <param name="client_id" style="query" soa:expression="$msg.request/inp1:client_id" default="" type="xsd:string"/>
+               <param name="client_secret" style="query" soa:expression="$msg.request/inp1:client_secret" default="" type="xsd:string"/>
+               <param name="grant_type" style="query" soa:expression="$msg.request/inp1:grant_type" default="" type="xsd:string"/>
+               <param name="refresh_token" style="query" soa:expression="$msg.request/inp1:refresh_token" default="" type="xsd:string"/>
+               <representation mediaType="application/x-www-form-urlencoded" element="cns:OAuthRefreshTokenRequest" xmlns:cns="http://www.qualogy.com/blog/mnuman/RESTOAuth"/>
             </request>
             <response>
                <representation mediaType="application/json" element="cns:OAuthTokenResponse" xmlns:cns="http://www.qualogy.com/blog/mnuman/RESTOAuth"/>

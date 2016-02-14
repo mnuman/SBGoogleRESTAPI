@@ -12,7 +12,17 @@
             <con:snippetVersion>1.0</con:snippetVersion>
         </con:xqConfiguration>
     </con:coreEntry>
-    <con:router>
+    <con:router errorHandler="error-N3f57c7ff.71089dea.0.152e19d7668.N7f30">
+        <con:pipeline type="error" name="error-N3f57c7ff.71089dea.0.152e19d7668.N7f30">
+            <con:stage id="_StageId-N3f57c7ff.71089dea.0.152e19d7668.N7f2f" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con2:reply isError="true">
+                        <con2:id>_ActionId-N3f57c7ff.71089dea.0.152e19d7668.N7f2c</con2:id>
+                    </con2:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
         <con:flow>
             <con:route-node name="RouteNode1">
                 <con:context>

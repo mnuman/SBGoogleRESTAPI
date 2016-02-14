@@ -12,7 +12,7 @@
             <con:snippetVersion>1.0</con:snippetVersion>
         </con:xqConfiguration>
     </con:coreEntry>
-    <con:router>
+    <con:router errorHandler="error-N3f57c7ff.71089dea.0.152e19d7668.N7ec6">
         <con:pipeline type="request" name="request-N3f57c7ff.N23140a6.0.152dc366670.N7f1f">
             <con:stage id="_StageId-N3f57c7ff.N23140a6.0.152dc366670.N7f1d" name="Stage1">
                 <con:context/>
@@ -36,7 +36,7 @@
                             <con2:xqueryTransform>
                                 <con2:resource ref="TokenManagement/Transformations/ValidateRequest"/>
                                 <con2:param name="operation">
-                                    <con2:path>$body/*[1]</con2:path>
+                                    <con2:path>$operation</con2:path>
                                 </con2:param>
                             </con2:xqueryTransform>
                         </con1:resourceExpr>
@@ -59,6 +59,16 @@
             <con:stage id="_StageId-N3f57c7ff.2017dccf.0.152dc5ac7d8.N7ffd" name="Stage1">
                 <con:context/>
                 <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-N3f57c7ff.71089dea.0.152e19d7668.N7ec6">
+            <con:stage id="_StageId-N3f57c7ff.71089dea.0.152e19d7668.N7ec5" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con2:reply isError="true">
+                        <con2:id>_ActionId-N3f57c7ff.71089dea.0.152e19d7668.N7ec2</con2:id>
+                    </con2:reply>
+                </con:actions>
             </con:stage>
         </con:pipeline>
         <con:flow>
