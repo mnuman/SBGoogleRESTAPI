@@ -17,6 +17,15 @@
             <con:stage id="_StageId-N3f57c7ff.71089dea.0.152e19d7668.N7f2f" name="Stage1">
                 <con:context/>
                 <con:actions>
+                    <con3:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-N3f57c7ff.670ebf10.0.152f0ab784a.N7f3b</con2:id>
+                        <con3:expr>
+                            <con2:xqueryText><![CDATA[<soap-env:Fault>
+  <faultcode>{data($fault/ctx:errorCode)}</faultcode>
+  <faulstring>{data($fault/ctx:reason)}</faulstring>
+</soap-env:Fault>]]></con2:xqueryText>
+                        </con3:expr>
+                    </con3:replace>
                     <con2:reply isError="true">
                         <con2:id>_ActionId-N3f57c7ff.71089dea.0.152e19d7668.N7f2c</con2:id>
                     </con2:reply>

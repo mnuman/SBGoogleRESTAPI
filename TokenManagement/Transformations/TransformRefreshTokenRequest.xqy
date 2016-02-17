@@ -14,7 +14,7 @@ declare function local:func($refreshToken as xs:string) as element() (:: schema-
         <goo:client_id>{xqu:client_id()}</goo:client_id>
         <goo:client_secret>{xqu:client_secret()}</goo:client_secret>
         <goo:grant_type>{xqu:grant_refresh()}</goo:grant_type>
-        <goo:refresh_token>{fn:data($refreshToken)}</goo:refresh_token>
+        <goo:refresh_token>{$refreshToken}</goo:refresh_token>
     </goo:OAuthRefreshTokenRequest>
 };
 

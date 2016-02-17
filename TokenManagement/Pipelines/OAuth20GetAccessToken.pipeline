@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
     <con:coreEntry>
         <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
             <con:wsdl ref="TokenManagement/Resources/OAuth20"/>
@@ -17,12 +17,127 @@
             <con:stage id="_StageId-N3f57c7ff.71089dea.0.152e19d7668.N7efa" name="Stage1">
                 <con:context/>
                 <con:actions>
+                    <con5:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con6:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57c7ff.670ebf10.0.152f0ab784a.N7f38</con6:id>
+                        <con3:expr>
+                            <con2:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config"><![CDATA[<soap-env:Fault>
+  <faultcode>{data($fault/ctx:errorCode)}</faultcode>
+  <faulstring>{data($fault/ctx:reason)}</faulstring>
+</soap-env:Fault>]]></con2:xqueryText>
+                        </con3:expr>
+                    </con5:replace>
                     <con1:reply isError="true">
                         <con1:id>_ActionId-N3f57c7ff.71089dea.0.152e19d7668.N7ef7</con1:id>
                     </con1:reply>
                 </con:actions>
             </con:stage>
         </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57c7ff.670ebf10.0.152f0ab784a.N8000"/>
+        <con:pipeline type="response" name="response-N3f57c7ff.670ebf10.0.152f0ab784a.N7fff">
+            <con:stage id="_StageId-N3f57c7ff.670ebf10.0.152f0ab784a.N7ffd" name="TokenOkay">
+                <con:context>
+                    <con1:userNsDecl prefix="oaut" namespace="http://xmlns.qualogy.com/blog/mnuman/OAuth"/>
+                </con:context>
+                <con:actions>
+                    <con2:ifThenElse>
+                        <con1:id>_ActionId-N3f57c7ff.670ebf10.0.152f0ab784a.N7f89</con1:id>
+                        <con2:case id="_BranchId-N3f57c7ff.670ebf10.0.152f0ab784a.N7f88">
+                            <con2:condition>
+                                <con1:xqueryText>string-length($body/oaut:CacheToken/oaut:AccessToken) = 0</con1:xqueryText>
+                            </con2:condition>
+                            <con2:actions>
+                                <con2:Error>
+                                    <con1:id>_ActionId-N3f57c7ff.670ebf10.0.152f0ab784a.N7f83</con1:id>
+                                    <con2:errCode>OAUTH-TOKEN-NOT-FOUND</con2:errCode>
+                                    <con2:message>OAuth token could not be found or unknown user.</con2:message>
+                                </con2:Error>
+                            </con2:actions>
+                        </con2:case>
+                        <con2:case id="_BranchId-N3f57c7ff.670ebf10.0.152f0ab784a.N7f86">
+                            <con2:condition>
+                                <con1:xqueryText>current-dateTime() > $body/oaut:CacheToken/oaut:ExpiresAfter</con1:xqueryText>
+                            </con2:condition>
+                            <con2:actions>
+                                <con2:wsCallout>
+                                    <con1:id>_ActionId-N3f57c7ff.670ebf10.0.152f0ab784a.N7f80</con1:id>
+                                    <con2:service ref="TokenManagement/Pipelines/OAuth20RefreshAccessToken" xsi:type="con:PipelineRef"/>
+                                    <con2:operation>RefreshAccessToken</con2:operation>
+                                    <con2:request>
+                                        <con2:body wrapped="false">xml_RefreshAccessTokenReq</con2:body>
+                                    </con2:request>
+                                    <con2:response>
+                                        <con2:body wrapped="false">xml_RefreshAccessTokenRpy</con2:body>
+                                    </con2:response>
+                                    <con2:requestTransform>
+                                        <con2:assign varName="xml_RefreshAccessTokenReq">
+                                            <con1:id>_ActionId-N3f57c7ff.670ebf10.0.152f0ab784a.N7f7d</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText><![CDATA[<oaut:RefreshAccessTokenRequest>
+    <oaut:Issuer>{data($xml_InboundRequest//oaut:Issuer)}</oaut:Issuer>
+    <oaut:Owner>{data($xml_InboundRequest//oaut:Owner)}</oaut:Owner>
+</oaut:RefreshAccessTokenRequest>]]></con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                    </con2:requestTransform>
+                                    <con2:responseTransform>
+                                        <con2:assign varName="str_AccessToken">
+                                            <con1:id>_ActionId-N3f57c7ff.670ebf10.0.152f0ab784a.N7f7a</con1:id>
+                                            <con2:expr>
+                                                <con1:xqueryText>data($xml_RefreshAccessTokenRpy//oaut:AccessToken)</con1:xqueryText>
+                                            </con2:expr>
+                                        </con2:assign>
+                                    </con2:responseTransform>
+                                </con2:wsCallout>
+                            </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                            <con2:assign varName="str_AccessToken">
+                                <con1:id>_ActionId-N3f57c7ff.670ebf10.0.152f0ab784a.N7f77</con1:id>
+                                <con2:expr>
+                                    <con1:xqueryText>data($body//oaut:AccessToken)</con1:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                        </con2:default>
+                    </con2:ifThenElse>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-N3f57c7ff.670ebf10.0.152f0ab784a.N7f6e</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>&lt;oaut:GetAccessTokenResponse>
+  &lt;oaut:AccessToken>{$str_AccessToken}&lt;/oaut:AccessToken>
+&lt;/oaut:GetAccessTokenResponse></con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelinePairNode1">
+                <con:request>request-N3f57c7ff.670ebf10.0.152f0ab784a.N8000</con:request>
+                <con:response>response-N3f57c7ff.670ebf10.0.152f0ab784a.N7fff</con:response>
+            </con:pipeline-node>
+            <con:route-node name="RouteNode1">
+                <con:context>
+                    <con1:userNsDecl prefix="oaut" namespace="http://xmlns.qualogy.com/blog/mnuman/OAuth"/>
+                </con:context>
+                <con:actions>
+                    <con3:route>
+                        <con1:id>_ActionId-N3f57c7ff.670ebf10.0.152f0ab784a.N7fc6</con1:id>
+                        <con3:service ref="TokenManagement/BusinessServices/getTokenFromCache" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con3:operation>Get</con3:operation>
+                        <con3:outboundTransform>
+                            <con2:transport-headers>
+                                <con1:id>_ActionId-N3f57c7ff.670ebf10.0.152f0ab784a.N7fc2</con1:id>
+                                <con2:header-set>outbound-request</con2:header-set>
+                                <con2:header value="expression" name="jca.coherence.Key">
+                                    <con1:xqueryText>concat($body/oaut:GetAccessTokenRequest/oaut:Issuer, $body/oaut:GetAccessTokenRequest/oaut:Owner)</con1:xqueryText>
+                                </con2:header>
+                            </con2:transport-headers>
+                        </con3:outboundTransform>
+                        <con3:responseTransform/>
+                    </con3:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
         <con:shared-variables>
             <con:variable>xml_InboundRequest</con:variable>
         </con:shared-variables>
