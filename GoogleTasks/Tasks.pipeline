@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="GoogleTasks/Resources/Tasks"/>
+            <con:binding>
+                <con:name>GoogleTasksAPISOAPBinding</con:name>
+                <con:namespace>http://xmlns.qualogy.com/blog/mnuman/wsdl/Tasks</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router errorHandler="error-N3f574df6.51afe2ba.0.152fb232150.N7e2a">
+        <con:pipeline type="request" name="request-N3f574df6.N36fc0396.0.152fb1de20d.N8000">
+            <con:stage id="_StageId-N3f574df6.N36fc0396.0.152fb1de20d.N7ffe" name="CaptureInboundRequest">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="xml_InboundRequest">
+                        <con2:id>_ActionId-N3f574df6.N36fc0396.0.152fb1de20d.N7ffa</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>$body/*[1]</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f574df6.51afe2ba.0.152fb232150.N8000" name="GetAccessToken" errorHandler="error-N3f574df6.51afe2ba.0.152fb232150.N7e22">
+                <con:context>
+                    <con2:userNsDecl prefix="tas" namespace="http://xmlns.qualogy.com/blog/mnuman/Tasks"/>
+                    <con2:userNsDecl prefix="oaut" namespace="http://xmlns.qualogy.com/blog/mnuman/OAuth"/>
+                </con:context>
+                <con:actions>
+                    <con1:wsCallout>
+                        <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7ffd</con2:id>
+                        <con1:service ref="TokenManagement/ProxyServices/OAuth20ProxyService" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>GetAccessToken</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">xml_AccessTokenRequest</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">xml_AccessTokenReply</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="xml_AccessTokenRequest">
+                                <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7ffa</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText><![CDATA[<oaut:GetAccessTokenRequest>
+    <oaut:Issuer>{data($body//tas:User/tas:Issuer)}</oaut:Issuer>
+    <oaut:Owner>{data($body//tas:User/tas:Owner)}</oaut:Owner>
+</oaut:GetAccessTokenRequest>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="str_AccessToken">
+                                <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7ff7</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText>data($xml_AccessTokenReply//oaut:AccessToken)</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f574df6.N36fc0396.0.152fb1de20d.N7fff">
+            <con:stage id="_StageId-N3f574df6.N36fc0396.0.152fb1de20d.N7ffd" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-N3f574df6.51afe2ba.0.152fb232150.N7e2a">
+            <con:stage id="_StageId-N3f574df6.51afe2ba.0.152fb232150.N7e29" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con2:reply isError="true">
+                        <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7e23</con2:id>
+                    </con2:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-N3f574df6.51afe2ba.0.152fb232150.N7e22">
+            <con:stage id="_StageId-N3f574df6.51afe2ba.0.152fb232150.N7e21" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body">
+                        <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7e26</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText><![CDATA[<soap-env:Fault>
+  <faultcode>{if  (string-length($fault//*:faultcode)>0) 
+              then data($fault//*:faultcode)
+              else data($fault/ctx:errorCode)
+             }</faultcode>
+<faultstring>{if (string-length($fault//*:faultstring)>0)
+              then data($fault//*:faultstring)
+              else data($fault/ctx:reason)
+              }</faultstring>
+</soap-env:Fault>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="TasksPipeline">
+                <con:request>request-N3f574df6.N36fc0396.0.152fb1de20d.N8000</con:request>
+                <con:response>response-N3f574df6.N36fc0396.0.152fb1de20d.N7fff</con:response>
+            </con:pipeline-node>
+            <con:route-node name="RouteNode1">
+                <con:context>
+                    <con2:userNsDecl prefix="tas" namespace="http://xmlns.qualogy.com/blog/mnuman/Google/Tasks"/>
+                    <con2:userNsDecl prefix="tsk" namespace="http://xmlns.qualogy.com/blog/mnuman/Tasks"/>
+                </con:context>
+                <con:actions>
+                    <con3:routingTable>
+                        <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7fe0</con2:id>
+                        <con3:expression>
+                            <con2:xqueryText>$operation</con2:xqueryText>
+                        </con3:expression>
+                        <con3:case id="_BranchId-N3f574df6.51afe2ba.0.152fb232150.N7fdf">
+                            <con3:operator>equals</con3:operator>
+                            <con3:value>'GetTaskLists'</con3:value>
+                            <con3:route>
+                                <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7fde</con2:id>
+                                <con3:service ref="GoogleTasks/BusinessServices/GoogleTaskAPI" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con3:operation>GetTaskLists</con3:operation>
+                                <con3:outboundTransform>
+                                    <con1:transport-headers>
+                                        <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7eff</con2:id>
+                                        <con1:header-set>outbound-request</con1:header-set>
+                                        <con1:header value="expression" name="Authorization">
+                                            <con2:xqueryText>concat('Bearer ', $str_AccessToken)</con2:xqueryText>
+                                        </con1:header>
+                                    </con1:transport-headers>
+                                </con3:outboundTransform>
+                                <con3:responseTransform/>
+                            </con3:route>
+                        </con3:case>
+                        <con3:case id="_BranchId-N3f574df6.51afe2ba.0.152fb232150.N7fd9">
+                            <con3:operator>equals</con3:operator>
+                            <con3:value>'GetTaskList'</con3:value>
+                            <con3:route>
+                                <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7fd8</con2:id>
+                                <con3:service ref="GoogleTasks/BusinessServices/GoogleTaskAPI" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con3:operation>GetTaskList</con3:operation>
+                                <con3:outboundTransform>
+                                    <con1:transport-headers>
+                                        <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7ecc</con2:id>
+                                        <con1:header-set>outbound-request</con1:header-set>
+                                        <con1:header value="expression" name="Authorization">
+                                            <con2:xqueryText>concat('Bearer ', $str_AccessToken)</con2:xqueryText>
+                                        </con1:header>
+                                    </con1:transport-headers>
+                                </con3:outboundTransform>
+                                <con3:responseTransform/>
+                            </con3:route>
+                        </con3:case>
+                        <con3:case id="_BranchId-N3f574df6.51afe2ba.0.152fb232150.N7fd4">
+                            <con3:operator>equals</con3:operator>
+                            <con3:value>'CreateTaskList'</con3:value>
+                            <con3:route>
+                                <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7fd3</con2:id>
+                                <con3:service ref="GoogleTasks/BusinessServices/GoogleTaskAPI" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con3:operation>InsertTaskList</con3:operation>
+                                <con3:outboundTransform>
+                                    <con1:transport-headers>
+                                        <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7e9a</con2:id>
+                                        <con1:header-set>outbound-request</con1:header-set>
+                                        <con1:header value="expression" name="Authorization">
+                                            <con2:xqueryText>concat('Bearer ', $str_AccessToken)</con2:xqueryText>
+                                        </con1:header>
+                                    </con1:transport-headers>
+                                    <con1:replace varName="body" contents-only="true">
+                                        <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7e32</con2:id>
+                                        <con1:expr>
+                                            <con2:xqueryText>&lt;tas:InsertTaskList>
+    &lt;tas:title>{data($body/tsk:CreateTaskListReq/tsk:TaskListTitle)}&lt;/tas:title>
+&lt;/tas:InsertTaskList></con2:xqueryText>
+                                        </con1:expr>
+                                    </con1:replace>
+                                </con3:outboundTransform>
+                                <con3:responseTransform/>
+                            </con3:route>
+                        </con3:case>
+                        <con3:case id="_BranchId-N3f574df6.51afe2ba.0.152fb232150.N7fcf">
+                            <con3:operator>equals</con3:operator>
+                            <con3:value>'GetTasks'</con3:value>
+                            <con3:route>
+                                <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7fce</con2:id>
+                                <con3:service ref="GoogleTasks/BusinessServices/GoogleTaskAPI" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con3:operation>GetTasks</con3:operation>
+                                <con3:outboundTransform>
+                                    <con1:transport-headers>
+                                        <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7e68</con2:id>
+                                        <con1:header-set>outbound-request</con1:header-set>
+                                        <con1:header value="expression" name="Authorization">
+                                            <con2:xqueryText>concat('Bearer ', $str_AccessToken)</con2:xqueryText>
+                                        </con1:header>
+                                    </con1:transport-headers>
+                                </con3:outboundTransform>
+                                <con3:responseTransform/>
+                            </con3:route>
+                        </con3:case>
+                        <con3:case id="_BranchId-N3f574df6.51afe2ba.0.152fb232150.N7f9a">
+                            <con3:operator>equals</con3:operator>
+                            <con3:value>'CreateTask'</con3:value>
+                            <con3:route>
+                                <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7f99</con2:id>
+                                <con3:service ref="GoogleTasks/BusinessServices/GoogleTaskAPI" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con3:operation>InsertTask</con3:operation>
+                                <con3:outboundTransform>
+                                    <con1:transport-headers>
+                                        <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7e36</con2:id>
+                                        <con1:header-set>outbound-request</con1:header-set>
+                                        <con1:header value="expression" name="Authorization">
+                                            <con2:xqueryText>concat('Bearer ', $str_AccessToken)</con2:xqueryText>
+                                        </con1:header>
+                                    </con1:transport-headers>
+                                    <con1:replace varName="body" contents-only="true">
+                                        <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7e2e</con2:id>
+                                        <con1:expr>
+                                            <con2:xqueryText><![CDATA[<tas:InsertTask>
+    <tas:title>{data($body/tsk:CreateTaskReq/tsk:Task/tsk:Title)}</tas:title>
+    {if (string-length($body/tsk:CreateTaskReq/tsk:Task/tsk:Notes)>0)
+     then <tas:notes>{data($body/tsk:CreateTaskReq/tsk:Task/tsk:Notes)}</tas:notes>
+     else ()
+     }
+    {if ($body/tsk:CreateTaskReq/tsk:Task/tsk:DueDate)
+     then <tas:due>{data($body/tsk:CreateTaskReq/tsk:Task/tsk:DueDate)}</tas:due>
+     else ()
+     }
+</tas:InsertTask>]]></con2:xqueryText>
+                                        </con1:expr>
+                                    </con1:replace>
+                                    <con1:insert varName="outbound">
+                                        <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7e2b</con2:id>
+                                        <con1:location>
+                                            <con2:xpathText>./ctx:transport/ctx:request/tp:headers</con2:xpathText>
+                                        </con1:location>
+                                        <con1:where>after</con1:where>
+                                        <con1:expr>
+                                            <con2:xqueryText>&lt;tp:user-metadata name="TaskList" value="{data($xml_InboundRequest/tsk:TaskList)}"/></con2:xqueryText>
+                                        </con1:expr>
+                                    </con1:insert>
+                                </con3:outboundTransform>
+                                <con3:responseTransform/>
+                            </con3:route>
+                        </con3:case>
+                        <con3:defaultCase>
+                            <con3:route>
+                                <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7fdd</con2:id>
+                                <con3:service ref="GoogleTasks/BusinessServices/GoogleTaskAPI" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con3:operation>GetTaskLists</con3:operation>
+                                <con3:outboundTransform>
+                                    <con1:Error>
+                                        <con2:id>_ActionId-N3f574df6.51afe2ba.0.152fb232150.N7f67</con2:id>
+                                        <con1:errCode>INVALID-OPERATION</con1:errCode>
+                                        <con1:message>Operation not supported</con1:message>
+                                    </con1:Error>
+                                </con3:outboundTransform>
+                                <con3:responseTransform/>
+                            </con3:route>
+                        </con3:defaultCase>
+                    </con3:routingTable>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

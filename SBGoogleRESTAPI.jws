@@ -26,6 +26,7 @@
       <string v="oracle.jdeveloper.model.PathsConfiguration/ResourceBundlesContentSet"/>
    </list>
    <list n="listOfChildren">
+      <hash><url n="URL" path="GoogleTasks/GoogleTasks.jpr"/></hash>
       <hash><url n="URL" path="TokenManagement/TokenManagement.jpr"/></hash>
    </list>
    <hash n="oracle.jdeveloper.deploy.dt.DeploymentProfiles">
@@ -45,6 +46,6 @@
       </hash>
    </hash>
    <hash n="oracle.sb.tooling.ide.core.internal.application.SbApplication">
-      <value n="configContextSessionName" v="OSB-IDE_build_1455480809536"/>
+      <value n="configContextSessionName" v="OSB-IDE_build_1455911336177"/>
    </hash>
 </jws:workspace>

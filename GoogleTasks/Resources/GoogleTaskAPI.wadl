@@ -1,0 +1,73 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<application xmlns:soa="http://www.oracle.com/soa/rest" 
+xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:tns="http://xmlns.oracle.com/SBGoogleRESTAPI/GoogleTasks/GoogleTaskAPI"
+xmlns:cns="http://xmlns.qualogy.com/blog/mnuman/Google/Tasks"
+xmlns:got="http://xmlns.qualogy.com/blog/mnuman/Tasks" 
+xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="GoogleTaskAPI">RestReference</doc>
+   <grammars>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://xmlns.qualogy.com/blog/mnuman/Tasks" schemaLocation="../Schemas/Tasks.xsd"/>
+        </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://xmlns.qualogy.com/blog/mnuman/Google/Tasks" schemaLocation="../Schemas/GoogleTasksAsJSON.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/users/@me/lists">
+         <method name="GET" soa:wsdlOperation="GetTaskLists">
+            <doc title="GET GetTaskLists">Retrieve task lists, optionally restricting the number of lists to return/continuation</doc>
+            <request>
+               <param name="MaxResults" style="query" soa:expression="$msg.request/got:MaxResults" default="" type="xsd:long"/>
+               <param name="PageToken" style="query" soa:expression="$msg.request/got:PageToken" default="" type="xsd:string"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:TaskLists"/>
+            </response>
+         </method>
+         <method name="POST" soa:wsdlOperation="InsertTaskList">
+            <request>
+               <representation mediaType="application/json" element="cns:InsertTaskList" xmlns:cns="http://xmlns.qualogy.com/blog/mnuman/Google/Tasks"/>
+            </request>
+            <response>
+               <representation mediaType="application/json" element="cns:TaskLists" xmlns:cns="http://xmlns.qualogy.com/blog/mnuman/Google/Tasks"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/users/@me/lists/{tasklist}">
+         <method name="GET" soa:wsdlOperation="GetTaskList">
+            <doc title="GET GetTaskList">Retrieve the specified tasklist</doc>
+            <request>
+               <param name="tasklist" style="template" soa:expression="$msg.request/got:TaskListID" default="" type="xsd:string"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:TaskLists" xmlns:cns="http://xmlns.qualogy.com/blog/mnuman/Google/Tasks"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/lists/{tasklist}/tasks">
+         <method name="GET" soa:wsdlOperation="GetTasks">
+            <request>
+               <param name="tasklist" style="template" soa:expression="$msg.request/got:TaskList" default="" type="xsd:string"/>
+               <param name="showCompleted" style="query" soa:expression="$msg.request/got:ShowCompleted" default="" type="xsd:boolean"/>
+               <param name="maxResults" style="query" soa:expression="$msg.request/got:MaxResults" default="" type="xsd:long"/>
+               <param name="pageToken" style="query" soa:expression="$msg.request/got:PageToken" default="" type="xsd:string"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:ListOfTasks" xmlns:cns="http://xmlns.qualogy.com/blog/mnuman/Google/Tasks"/>
+            </response>
+         </method>
+         <method name="POST" soa:wsdlOperation="InsertTask">
+            <doc title="POST InsertTask">Insert a task in the specified tasklist</doc>
+            <request>
+               <param name="tasklist" style="template" soa:expression="$property.TaskList" default="" type="xsd:string"/>
+               <representation mediaType="application/json" element="cns:InsertTask" xmlns:cns="http://xmlns.qualogy.com/blog/mnuman/Google/Tasks"/>
+            </request>
+            <response>
+               <representation mediaType="application/json" element="cns:Task" xmlns:cns="http://xmlns.qualogy.com/blog/mnuman/Google/Tasks"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

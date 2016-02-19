@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:got="http://xmlns.qualogy.com/blog/mnuman/Tasks"
+            targetNamespace="http://xmlns.qualogy.com/blog/mnuman/Tasks" elementFormDefault="qualified">
+  <xsd:element name="GetTaskListsReq">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="User" type="got:TokenIdentification"/>
+        <xsd:element name="MaxResults" type="got:MaxResultsType" minOccurs="0"/>
+        <xsd:element name="PageToken" type="got:PageTokenType" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="GetTaskListReq">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="User" type="got:TokenIdentification"/>
+        <xsd:element name="TaskListID" type="xsd:string" minOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="GetTaskListRpy">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="TaskList" type="got:TaskListType" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="CreateTaskListReq">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="User" type="got:TokenIdentification"/>
+        <xsd:element name="TaskListTitle" type="got:TaskListTitle" minOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="CreateTaskListRpy">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="TaskList" type="got:TaskListType" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="GetTasksReq">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="User" type="got:TokenIdentification"/>
+        <xsd:element name="TaskList" type="xsd:string"/>
+        <xsd:element name="ShowCompleted" type="xsd:boolean"/>
+        <xsd:element name="MaxResults" type="got:MaxResultsType" minOccurs="0"/>
+        <xsd:element name="PageToken" type="got:PageTokenType" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="GetTasksRpy">
+    <xsd:complexType>
+      <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+        <xsd:element maxOccurs="1" minOccurs="1" ref="got:Task"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="CreateTaskReq">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="User" type="got:TokenIdentification"/>
+        <xsd:element name="TaskList" type="xsd:string"/>
+        <xsd:element name="Task" type="got:CreateTaskType"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="CreateTaskRpy">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="got:Task" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="Task" type="got:TaskType"/>
+  <xsd:complexType name="CreateTaskType">
+    <xsd:sequence>
+      <xsd:element name="Title" type="xsd:string"/>
+      <xsd:element name="Notes" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="DueDate" type="xsd:dateTime" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>  <xsd:complexType name="TaskType">
+    <xsd:sequence>
+      <xsd:element name="ID" type="xsd:string"/>
+      <xsd:element name="Title" type="xsd:string"/>
+      <xsd:element name="Status" type="xsd:string"/>
+      <xsd:element name="Notes" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="LastUpdated" type="xsd:dateTime"/>
+      <xsd:element name="DueDate" type="xsd:dateTime" minOccurs="0"/>
+      <xsd:element name="CompletionDate" type="xsd:dateTime" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TokenIdentification">
+    <xsd:sequence>
+      <xsd:element name="Issuer" type="xsd:string"/>
+      <xsd:element name="Owner" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="PageTokenType">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="MaxResultsType">
+    <xsd:restriction base="xsd:long">
+      <xsd:minExclusive value="0"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="TaskListType">
+    <xsd:sequence>
+      <xsd:element name="ID" type="xsd:string"/>
+      <xsd:element name="Title" type="got:TaskListTitle"/>
+      <xsd:element name="LastUpdated" type="xsd:dateTime"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="TaskListTitle">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+</xsd:schema>

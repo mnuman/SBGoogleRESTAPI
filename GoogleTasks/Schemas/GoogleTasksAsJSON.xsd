@@ -1,0 +1,69 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.qualogy.com/blog/mnuman/Google/Tasks"
+            xmlns:tns="http://xmlns.qualogy.com/blog/mnuman/Google/Tasks" targetNamespace="http://xmlns.qualogy.com/blog/mnuman/Google/Tasks"
+            elementFormDefault="qualified" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" nxsd:version="JSON"
+            nxsd:encoding="UTF-8">
+  <xsd:element name="TaskLists">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="kind" type="xsd:string"/>
+        <xsd:element name="etag" type="xsd:string"/>
+        <xsd:element name="items" maxOccurs="unbounded" type="tns:TaskListType"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="InsertTaskList">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="title" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="InsertTask">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="title" type="xsd:string"/>
+        <xsd:element name="notes" minOccurs="0" type="xsd:string"/>
+        <xsd:element name="due" minOccurs="0" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="Task" type="tns:TaskType"/>
+  <xsd:element name="ListOfTasks">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="kind" type="xsd:string"/>
+        <xsd:element name="etag" type="xsd:string"/>
+        <xsd:element name="items" maxOccurs="unbounded" type="tns:TaskType"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TaskListType">
+    <xsd:sequence>
+      <xsd:element name="kind" type="xsd:string"/>
+      <xsd:element name="id" type="xsd:string"/>
+      <xsd:element name="title" type="xsd:string"/>
+      <xsd:element name="updated" type="xsd:string"/>
+      <xsd:element name="selfLink" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TaskType">
+    <xsd:sequence>
+      <xsd:element name="kind" type="xsd:string"/>
+      <xsd:element name="id" type="xsd:string"/>
+      <xsd:element name="etag" type="xsd:string"/>
+      <xsd:element name="title" type="xsd:string"/>
+      <xsd:element name="updated" type="xsd:string"/>
+      <xsd:element name="selfLink" type="xsd:string"/>
+      <xsd:element name="position" type="xsd:integer"/>
+      <xsd:element name="notes" minOccurs="0" type="xsd:string"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="due" minOccurs="0" type="xsd:string"/>
+      <xsd:element name="completed" minOccurs="0" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:annotation xmlns="">
+    <xsd:appinfo>NXSDSAMPLE=</xsd:appinfo>
+    <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+  </xsd:annotation>
+</xsd:schema>

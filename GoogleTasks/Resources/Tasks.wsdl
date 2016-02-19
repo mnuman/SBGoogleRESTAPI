@@ -1,0 +1,113 @@
+<wsdl:definitions name="Tasks" targetNamespace="http://xmlns.qualogy.com/blog/mnuman/wsdl/Tasks" 
+xmlns:tns="http://xmlns.qualogy.com/blog/mnuman/wsdl/Tasks" 
+xmlns:tsk="http://xmlns.qualogy.com/blog/mnuman/Tasks" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <wsdl:types>
+        <xsd:schema>
+            <xsd:import namespace="http://xmlns.qualogy.com/blog/mnuman/Tasks" schemaLocation="../Schemas/Tasks.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="GetTaskListsRequestMessage">
+        <wsdl:part name="payload" element="tsk:GetTaskListsReq"/>
+    </wsdl:message>
+    <wsdl:message name="GetTaskListsReplyMessage">
+        <wsdl:part name="payload" element="tsk:GetTaskListRpy"/>
+    </wsdl:message>
+    <wsdl:message name="GetTaskListRequestMessage">
+        <wsdl:part name="payload" element="tsk:GetTaskListReq"/>
+    </wsdl:message>
+    <wsdl:message name="GetTaskListReplyMessage">
+        <wsdl:part name="payload" element="tsk:GetTaskListRpy"/>
+    </wsdl:message>
+    <wsdl:message name="CreateTaskListRequestMessage">
+        <wsdl:part name="payload" element="tsk:CreateTaskListReq"/>
+    </wsdl:message>
+    <wsdl:message name="CreateTaskListReplyMessage">
+        <wsdl:part name="payload" element="tsk:CreateTaskListRpy"/>
+    </wsdl:message>
+    <wsdl:message name="GetTasksRequestMessage">
+        <wsdl:part name="payload" element="tsk:GetTasksReq"/>
+    </wsdl:message>
+    <wsdl:message name="GetTasksReplyMessage">
+        <wsdl:part name="payload" element="tsk:GetTasksRpy"/>
+    </wsdl:message>
+    <wsdl:message name="CreateTaskRequestMessage">
+        <wsdl:part name="payload" element="tsk:CreateTaskReq"/>
+    </wsdl:message>
+    <wsdl:message name="CreateTaskReplyMessage">
+        <wsdl:part name="payload" element="tsk:CreateTaskRpy"/>
+    </wsdl:message>
+    
+    
+    <wsdl:portType name="GoogleTasksAPI_ptt">
+        <wsdl:operation name="GetTaskLists">
+            <wsdl:input message="tns:GetTaskListsRequestMessage"/>
+            <wsdl:output message="tns:GetTaskListsReplyMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetTaskList">
+            <wsdl:input message="tns:GetTaskListRequestMessage"/>
+            <wsdl:output message="tns:GetTaskListReplyMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="CreateTaskList">
+            <wsdl:input message="tns:CreateTaskListRequestMessage"/>
+            <wsdl:output message="tns:CreateTaskListReplyMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetTasks">
+            <wsdl:input message="tns:GetTasksRequestMessage"/>
+            <wsdl:output message="tns:GetTasksReplyMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="CreateTask">
+            <wsdl:input message="tns:CreateTaskRequestMessage"/>
+            <wsdl:output message="tns:CreateTaskReplyMessage"/>
+        </wsdl:operation>
+        
+    </wsdl:portType>
+    <wsdl:binding name="GoogleTasksAPISOAPBinding" type="tns:GoogleTasksAPI_ptt">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetTaskLists">
+            <soap:operation style="document" soapAction="GetTaskLists"/>
+            <wsdl:input>
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/POC-APIM-SBApp/GoogleTasks/GoogleTasks"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/POC-APIM-SBApp/GoogleTasks/GoogleTasks"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetTaskList">
+            <soap:operation style="document" soapAction="GetTaskList"/>
+            <wsdl:input>
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/POC-APIM-SBApp/GoogleTasks/GoogleTasks"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/POC-APIM-SBApp/GoogleTasks/GoogleTasks"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CreateTaskList">
+            <soap:operation style="document" soapAction="CreateTaskList"/>
+            <wsdl:input>
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/POC-APIM-SBApp/GoogleTasks/GoogleTasks"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/POC-APIM-SBApp/GoogleTasks/GoogleTasks"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetTasks">
+            <soap:operation style="document" soapAction="GetTasks"/>
+            <wsdl:input>
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/POC-APIM-SBApp/GoogleTasks/GoogleTasks"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/POC-APIM-SBApp/GoogleTasks/GoogleTasks"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CreateTask">
+            <soap:operation style="document" soapAction="CreateTask"/>
+            <wsdl:input>
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/POC-APIM-SBApp/GoogleTasks/GoogleTasks"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/POC-APIM-SBApp/GoogleTasks/GoogleTasks"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>
