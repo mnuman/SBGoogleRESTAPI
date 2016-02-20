@@ -26,7 +26,7 @@
                <representation mediaType="application/json" element="cns:InsertTaskList" xmlns:cns="http://xmlns.qualogy.com/blog/mnuman/Google/Tasks"/>
             </request>
             <response>
-               <representation mediaType="application/json" element="cns:TaskLists" xmlns:cns="http://xmlns.qualogy.com/blog/mnuman/Google/Tasks"/>
+               <representation mediaType="application/json" element="cns:TaskList" xmlns:cns="http://xmlns.qualogy.com/blog/mnuman/Google/Tasks"/>
             </response>
          </method>
       </resource>
