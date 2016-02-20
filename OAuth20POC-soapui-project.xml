@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="efbbcaa3-7519-46b7-bbb1-9ed6feb30454" activeEnvironment="Default" name="OAuth20POC" resourceRoot="" soapui-version="5.2.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="81bd8184-d540-4f43-8f7a-22b0b8faf431" wsaVersion="NONE" name="OAuth20SOAPBinding" type="wsdl" bindingName="{http://xmlns.oracle.com/OAuth}OAuth20SOAPBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:7001/TokenManagement/OAuth20ProxyService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:7001/TokenManagement/OAuth20ProxyService?wsdl"><con:part><con:url>http://localhost:7001/TokenManagement/OAuth20ProxyService?wsdl</con:url><con:content><![CDATA[<WL5G3N0:definitions name="OAuth" targetNamespace="http://xmlns.oracle.com/OAuth" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://xmlns.qualogy.com/blog/mnuman/OAuth" xmlns:WL5G3N2="http://xmlns.oracle.com/OAuth" xmlns:WL5G3N3="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+    <xsd:schema xmlns:inp1="http://xmlns.qualogy.com/blog/mnuman/OAuth" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://xmlns.oracle.com/OAuth" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://xmlns.qualogy.com/blog/mnuman/OAuth" schemaLocation="http://localhost:7001/TokenManagement/OAuth20ProxyService?SCHEMA%2FTokenManagement%2FSchemas%2FAuthorization"/>
+    </xsd:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="RedeemAuthorizationTokenRequestMessage">
+    <WL5G3N0:part element="WL5G3N1:RedeemAuthorizationTokenRequest" name="payload"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="RedeemAuthorizationTokenReplyMessage">
+    <WL5G3N0:part element="WL5G3N1:RedeemAuthorizationTokenResponse" name="payload"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="GetAccessTokenRequestMessage">
+    <WL5G3N0:part element="WL5G3N1:GetAccessTokenRequest" name="payload"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="GetAccessTokenResponseMessage">
+    <WL5G3N0:part element="WL5G3N1:GetAccessTokenResponse" name="payload"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="RefreshAccessTokenRequestMessage">
+    <WL5G3N0:part element="WL5G3N1:RefreshAccessTokenRequest" name="payload"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="RefreshAccessTokenResponseMessage">
+    <WL5G3N0:part element="WL5G3N1:RefreshAccessTokenResponse" name="payload"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="OAuth20PortType">
+    <WL5G3N0:operation name="RedeemAuthorizationCode">
+      <WL5G3N0:input message="WL5G3N2:RedeemAuthorizationTokenRequestMessage"/>
+      <WL5G3N0:output message="WL5G3N2:RedeemAuthorizationTokenReplyMessage"/>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="GetAccessToken">
+      <WL5G3N0:input message="WL5G3N2:GetAccessTokenRequestMessage"/>
+      <WL5G3N0:output message="WL5G3N2:GetAccessTokenResponseMessage"/>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="RefreshAccessToken">
+      <WL5G3N0:input message="WL5G3N2:RefreshAccessTokenRequestMessage"/>
+      <WL5G3N0:output message="WL5G3N2:RefreshAccessTokenResponseMessage"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="OAuth20SOAPBinding" type="WL5G3N2:OAuth20PortType">
+    <WL5G3N3:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="RedeemAuthorizationCode">
+      <WL5G3N3:operation soapAction="RedeemAuthorizationCode" style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N3:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N3:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="GetAccessToken">
+      <WL5G3N3:operation soapAction="GetAccessToken" style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N3:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N3:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="RefreshAccessToken">
+      <WL5G3N3:operation soapAction="RefreshAccessToken" style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N3:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N3:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="OAuth20SOAPBindingQSService">
+    <WL5G3N0:documentation>OSB Service</WL5G3N0:documentation>
+    <WL5G3N0:port binding="WL5G3N2:OAuth20SOAPBinding" name="OAuth20SOAPBindingQSPort">
+      <WL5G3N3:address location="http://localhost:7001/TokenManagement/OAuth20ProxyService"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:7001/TokenManagement/OAuth20ProxyService?SCHEMA%2FTokenManagement%2FSchemas%2FAuthorization</con:url><con:content><![CDATA[<xsd:schema targetNamespace="http://xmlns.qualogy.com/blog/mnuman/OAuth" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:qoa="http://xmlns.qualogy.com/blog/mnuman/OAuth">
+  <xsd:element name="RedeemAuthorizationTokenResponse" type="qoa:TokenResponse"/>
+  <xsd:element name="RedeemAuthorizationTokenRequest" type="qoa:RedeemAuthorizationTokenRequest">
+    <xsd:annotation>
+      <xsd:documentation>A sample element</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="RefreshAccessTokenRequest" type="qoa:TokenRequest"/>
+  <xsd:element name="RefreshAccessTokenResponse" type="qoa:TokenResponse"/>
+  <xsd:element name="GetAccessTokenRequest" type="qoa:TokenRequest"/>
+  <xsd:element name="GetAccessTokenResponse" type="qoa:TokenResponse"/>
+  <xsd:element name="CacheToken" type="qoa:CacheToken"/>
+  <xsd:complexType name="RedeemAuthorizationTokenRequest">
+    <xsd:sequence>
+      <xsd:element name="Issuer" type="xsd:string"/>
+      <xsd:element name="Owner" type="xsd:string"/>
+      <xsd:element name="AuthorizationCode" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TokenResponse">
+    <xsd:sequence>
+      <xsd:element name="AccessToken" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TokenRequest">
+    <xsd:sequence>
+      <xsd:element name="Issuer" type="xsd:string"/>
+      <xsd:element name="Owner" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CacheToken">
+    <xsd:sequence>
+      <xsd:element name="AccessToken" type="xsd:string"/>
+      <xsd:element name="RefreshToken" type="xsd:string"/>
+      <xsd:element name="ExpiresAfter" type="xsd:dateTime"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:7001/TokenManagement/OAuth20ProxyService</con:endpoint></con:endpoints><con:operation id="26fb22b1-e3dd-45c1-a689-c959c10ece88" isOneWay="false" action="GetAccessToken" name="GetAccessToken" bindingOperationName="GetAccessToken" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="ce48ca10-a227-4220-9010-cd4795cac920" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7001/TokenManagement/OAuth20ProxyService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+                  xmlns:oaut="http://xmlns.qualogy.com/blog/mnuman/OAuth">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <oaut:GetAccessTokenRequest>\r
+         <oaut:Issuer>Google</oaut:Issuer>
+         <oaut:Owner>mnuman@qualogy.com</oaut:Owner>
+      </oaut:GetAccessTokenRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="GetAccessToken"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="4332e4ad-8113-4eb1-82ca-1e6cc9297148" isOneWay="false" action="RedeemAuthorizationCode" name="RedeemAuthorizationCode" bindingOperationName="RedeemAuthorizationCode" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="6de6c545-7660-450c-bb8e-671441634962" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7001/TokenManagement/OAuth20ProxyService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:oaut="http://xmlns.qualogy.com/blog/mnuman/OAuth">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <oaut:RedeemAuthorizationTokenRequest>\r
+         <oaut:Issuer>Google</oaut:Issuer>\r
+         <oaut:Owner>mnuman@qualogy.com</oaut:Owner>\r
+         <oaut:AuthorizationCode>Your-Authorization-Token-Here</oaut:AuthorizationCode>\r
+      </oaut:RedeemAuthorizationTokenRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="RedeemAuthorizationCode"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="74080d8a-5c84-4de3-88e5-fce7add64a89" isOneWay="false" action="RefreshAccessToken" name="RefreshAccessToken" bindingOperationName="RefreshAccessToken" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="11cb07cb-9d6e-4550-b70f-54d616fbde61" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7001/TokenManagement/OAuth20ProxyService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:oaut="http://xmlns.qualogy.com/blog/mnuman/OAuth">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <oaut:RefreshAccessTokenRequest>\r
+         <oaut:Issuer>Google</oaut:Issuer>
+         <oaut:Owner>mnuman@qualogy.com</oaut:Owner>
+      </oaut:RefreshAccessTokenRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="RefreshAccessToken"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="65a467a0-e7e2-4fa4-9090-14ec9e6c0cda" wsaVersion="NONE" name="GoogleTasksAPISOAPBinding" type="wsdl" bindingName="{http://xmlns.qualogy.com/blog/mnuman/wsdl/Tasks}GoogleTasksAPISOAPBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:7001/Tasks?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:7001/Tasks?wsdl"><con:part><con:url>http://localhost:7001/Tasks?wsdl</con:url><con:content><![CDATA[<WL5G3N0:definitions name="Tasks" targetNamespace="http://xmlns.qualogy.com/blog/mnuman/wsdl/Tasks" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://xmlns.qualogy.com/blog/mnuman/Tasks" xmlns:WL5G3N2="http://xmlns.qualogy.com/blog/mnuman/wsdl/Tasks" xmlns:WL5G3N3="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+    <xsd:schema xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://xmlns.qualogy.com/blog/mnuman/wsdl/Tasks" xmlns:tsk="http://xmlns.qualogy.com/blog/mnuman/Tasks" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://xmlns.qualogy.com/blog/mnuman/Tasks" schemaLocation="http://localhost:7001/Tasks?SCHEMA%2FGoogleTasks%2FSchemas%2FTasks"/>
+    </xsd:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="GetTaskListsRequestMessage">
+    <WL5G3N0:part element="WL5G3N1:GetTaskListsReq" name="payload"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="GetTaskListsReplyMessage">
+    <WL5G3N0:part element="WL5G3N1:GetTaskListRpy" name="payload"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="GetTaskListRequestMessage">
+    <WL5G3N0:part element="WL5G3N1:GetTaskListReq" name="payload"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="GetTaskListReplyMessage">
+    <WL5G3N0:part element="WL5G3N1:GetTaskListRpy" name="payload"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="CreateTaskListRequestMessage">
+    <WL5G3N0:part element="WL5G3N1:CreateTaskListReq" name="payload"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="CreateTaskListReplyMessage">
+    <WL5G3N0:part element="WL5G3N1:CreateTaskListRpy" name="payload"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="GetTasksRequestMessage">
+    <WL5G3N0:part element="WL5G3N1:GetTasksReq" name="payload"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="GetTasksReplyMessage">
+    <WL5G3N0:part element="WL5G3N1:GetTasksRpy" name="payload"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="CreateTaskRequestMessage">
+    <WL5G3N0:part element="WL5G3N1:CreateTaskReq" name="payload"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="CreateTaskReplyMessage">
+    <WL5G3N0:part element="WL5G3N1:CreateTaskRpy" name="payload"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="GoogleTasksAPI_ptt">
+    <WL5G3N0:operation name="GetTaskLists">
+      <WL5G3N0:input message="WL5G3N2:GetTaskListsRequestMessage"/>
+      <WL5G3N0:output message="WL5G3N2:GetTaskListsReplyMessage"/>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="GetTaskList">
+      <WL5G3N0:input message="WL5G3N2:GetTaskListRequestMessage"/>
+      <WL5G3N0:output message="WL5G3N2:GetTaskListReplyMessage"/>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="CreateTaskList">
+      <WL5G3N0:input message="WL5G3N2:CreateTaskListRequestMessage"/>
+      <WL5G3N0:output message="WL5G3N2:CreateTaskListReplyMessage"/>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="GetTasks">
+      <WL5G3N0:input message="WL5G3N2:GetTasksRequestMessage"/>
+      <WL5G3N0:output message="WL5G3N2:GetTasksReplyMessage"/>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="CreateTask">
+      <WL5G3N0:input message="WL5G3N2:CreateTaskRequestMessage"/>
+      <WL5G3N0:output message="WL5G3N2:CreateTaskReplyMessage"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="GoogleTasksAPISOAPBinding" type="WL5G3N2:GoogleTasksAPI_ptt">
+    <WL5G3N3:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="GetTaskLists">
+      <WL5G3N3:operation soapAction="GetTaskLists" style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N3:body namespace="http://xmlns.oracle.com/POC-APIM-SBApp/GoogleTasks/GoogleTasks" use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N3:body namespace="http://xmlns.oracle.com/POC-APIM-SBApp/GoogleTasks/GoogleTasks" use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="GetTaskList">
+      <WL5G3N3:operation soapAction="GetTaskList" style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N3:body namespace="http://xmlns.oracle.com/POC-APIM-SBApp/GoogleTasks/GoogleTasks" use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N3:body namespace="http://xmlns.oracle.com/POC-APIM-SBApp/GoogleTasks/GoogleTasks" use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="CreateTaskList">
+      <WL5G3N3:operation soapAction="CreateTaskList" style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N3:body namespace="http://xmlns.oracle.com/POC-APIM-SBApp/GoogleTasks/GoogleTasks" use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N3:body namespace="http://xmlns.oracle.com/POC-APIM-SBApp/GoogleTasks/GoogleTasks" use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="GetTasks">
+      <WL5G3N3:operation soapAction="GetTasks" style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N3:body namespace="http://xmlns.oracle.com/POC-APIM-SBApp/GoogleTasks/GoogleTasks" use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N3:body namespace="http://xmlns.oracle.com/POC-APIM-SBApp/GoogleTasks/GoogleTasks" use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="CreateTask">
+      <WL5G3N3:operation soapAction="CreateTask" style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N3:body namespace="http://xmlns.oracle.com/POC-APIM-SBApp/GoogleTasks/GoogleTasks" use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N3:body namespace="http://xmlns.oracle.com/POC-APIM-SBApp/GoogleTasks/GoogleTasks" use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="GoogleTasksAPISOAPBindingQSService">
+    <WL5G3N0:documentation>OSB Service</WL5G3N0:documentation>
+    <WL5G3N0:port binding="WL5G3N2:GoogleTasksAPISOAPBinding" name="GoogleTasksAPISOAPBindingQSPort">
+      <WL5G3N3:address location="http://localhost:7001/Tasks"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:7001/Tasks?SCHEMA%2FGoogleTasks%2FSchemas%2FTasks</con:url><con:content><![CDATA[<xsd:schema targetNamespace="http://xmlns.qualogy.com/blog/mnuman/Tasks" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:got="http://xmlns.qualogy.com/blog/mnuman/Tasks">
+  <xsd:element name="GetTaskListsReq">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="User" type="got:TokenIdentification"/>
+        <xsd:element name="MaxResults" type="got:MaxResultsType" minOccurs="0"/>
+        <xsd:element name="PageToken" type="got:PageTokenType" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="GetTaskListReq">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="User" type="got:TokenIdentification"/>
+        <xsd:element name="TaskListID" type="xsd:string" minOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="GetTaskListRpy">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="TaskList" type="got:TaskListType" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="CreateTaskListReq">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="User" type="got:TokenIdentification"/>
+        <xsd:element name="TaskListTitle" type="got:TaskListTitle" minOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="CreateTaskListRpy">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="TaskList" type="got:TaskListType" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="GetTasksReq">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="User" type="got:TokenIdentification"/>
+        <xsd:element name="TaskList" type="xsd:string"/>
+        <xsd:element name="ShowCompleted" type="xsd:boolean"/>
+        <xsd:element name="MaxResults" type="got:MaxResultsType" minOccurs="0"/>
+        <xsd:element name="PageToken" type="got:PageTokenType" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="GetTasksRpy">
+    <xsd:complexType>
+      <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+        <xsd:element maxOccurs="1" minOccurs="1" ref="got:Task"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="CreateTaskReq">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="User" type="got:TokenIdentification"/>
+        <xsd:element name="TaskList" type="xsd:string"/>
+        <xsd:element name="Task" type="got:CreateTaskType"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="CreateTaskRpy">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="got:Task" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="Task" type="got:TaskType"/>
+  <xsd:complexType name="CreateTaskType">
+    <xsd:sequence>
+      <xsd:element name="Title" type="xsd:string"/>
+      <xsd:element name="Notes" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="DueDate" type="xsd:dateTime" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TaskType">
+    <xsd:sequence>
+      <xsd:element name="ID" type="xsd:string"/>
+      <xsd:element name="Title" type="xsd:string"/>
+      <xsd:element name="Status" type="xsd:string"/>
+      <xsd:element name="Notes" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="LastUpdated" type="xsd:dateTime"/>
+      <xsd:element name="DueDate" type="xsd:dateTime" minOccurs="0"/>
+      <xsd:element name="CompletionDate" type="xsd:dateTime" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TokenIdentification">
+    <xsd:sequence>
+      <xsd:element name="Issuer" type="xsd:string"/>
+      <xsd:element name="Owner" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="PageTokenType">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="MaxResultsType">
+    <xsd:restriction base="xsd:long">
+      <xsd:minExclusive value="0"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="TaskListType">
+    <xsd:sequence>
+      <xsd:element name="ID" type="xsd:string"/>
+      <xsd:element name="Title" type="got:TaskListTitle"/>
+      <xsd:element name="LastUpdated" type="xsd:dateTime"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="TaskListTitle">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:7001/Tasks</con:endpoint></con:endpoints><con:operation id="46daee15-11cc-46c4-9bda-e5a9ee2539fe" isOneWay="false" action="CreateTask" name="CreateTask" bindingOperationName="CreateTask" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="c9c6a4d5-e54f-4613-9ba0-c848ae8a40cb" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7001/Tasks</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tas="http://xmlns.qualogy.com/blog/mnuman/Tasks">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tas:CreateTaskReq>\r
+         <tas:User>\r
+            <tas:Issuer>Google</tas:Issuer>\r
+            <tas:Owner>mnuman@qualogy.com</tas:Owner>\r
+         </tas:User>\r
+         <tas:TaskList>MDU0NDU5NjI0NjY4MjUzNTc0OTk6NTA2MDA3MTQzOjA</tas:TaskList>\r
+         <tas:Task>\r
+            <tas:Title>Dutch Eredivisie</tas:Title>\r
+            <tas:Notes>Watch Ajax win !</tas:Notes>\r
+            <tas:DueDate>2016-02-21T19:00:00.000Z</tas:DueDate>\r
+         </tas:Task>\r
+      </tas:CreateTaskReq>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CreateTask"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="09279414-7f94-4f35-80dc-0166b543c9eb" isOneWay="false" action="CreateTaskList" name="CreateTaskList" bindingOperationName="CreateTaskList" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="c0dbdfd1-7b6c-4416-a612-a708b60e3efb" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7001/Tasks</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tas="http://xmlns.qualogy.com/blog/mnuman/Tasks">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tas:CreateTaskListReq>\r
+         <tas:User>\r
+            <tas:Issuer>Google</tas:Issuer>\r
+            <tas:Owner>mnuman@qualogy.com</tas:Owner>\r
+         </tas:User>\r
+         <tas:TaskListTitle>MyDemoTaskList</tas:TaskListTitle>\r
+      </tas:CreateTaskListReq>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CreateTaskList"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="7bdb323d-b963-4113-8f29-0f509fca83d1" isOneWay="false" action="GetTaskList" name="GetTaskList" bindingOperationName="GetTaskList" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="3c885e0a-53a6-45a8-9081-f88c857e47cc" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7001/Tasks</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tas="http://xmlns.qualogy.com/blog/mnuman/Tasks">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tas:GetTaskListReq>\r
+         <tas:User>\r
+            <tas:Issuer>Google</tas:Issuer>\r
+            <tas:Owner>mnuman@qualogy.com</tas:Owner>\r
+         </tas:User>\r
+         <tas:TaskListID>MDU0NDU5NjI0NjY4MjUzNTc0OTk6MDow</tas:TaskListID>\r
+      </tas:GetTaskListReq>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="GetTaskList"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="d0092967-27ed-42c0-9afb-c1b80e1d6bd7" isOneWay="false" action="GetTaskLists" name="GetTaskLists" bindingOperationName="GetTaskLists" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="284bf1aa-e5bc-43fa-ae0e-7a818e20a060" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7001/Tasks</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tas="http://xmlns.qualogy.com/blog/mnuman/Tasks">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tas:GetTaskListsReq>\r
+         <tas:User>\r
+            <tas:Issuer>Google</tas:Issuer>\r
+            <tas:Owner>mnuman@qualogy.com</tas:Owner>\r
+         </tas:User>\r
+      </tas:GetTaskListsReq>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="GetTaskLists"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="f9d19fcc-4402-446e-a8d5-d520d20cbc02" isOneWay="false" action="GetTasks" name="GetTasks" bindingOperationName="GetTasks" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="0b9b70a9-2817-4f95-aa68-3bae68a84bf1" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7001/Tasks</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tas="http://xmlns.qualogy.com/blog/mnuman/Tasks">\r
+   <soapenv:Body>\r
+      <tas:GetTasksReq>\r
+         <tas:User>\r
+            <tas:Issuer>Google</tas:Issuer>\r
+            <tas:Owner>mnuman@qualogy.com</tas:Owner>\r
+         </tas:User>\r
+         <tas:TaskList>MDU0NDU5NjI0NjY4MjUzNTc0OTk6NTA2MDA3MTQzOjA</tas:TaskList>\r
+         <tas:ShowCompleted>true</tas:ShowCompleted>\r
+      </tas:GetTasksReq>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="GetTasks"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>
