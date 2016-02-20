@@ -64,12 +64,7 @@
                 </con:actions>
             </con:stage>
         </con:pipeline>
-        <con:pipeline type="response" name="response-N3f574df6.N36fc0396.0.152fb1de20d.N7fff">
-            <con:stage id="_StageId-N3f574df6.N36fc0396.0.152fb1de20d.N7ffd" name="Stage1">
-                <con:context/>
-                <con:actions/>
-            </con:stage>
-        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f574df6.N36fc0396.0.152fb1de20d.N7fff"></con:pipeline>
         <con:pipeline type="error" name="error-N3f574df6.51afe2ba.0.152fb232150.N7e2a">
             <con:stage id="_StageId-N3f574df6.51afe2ba.0.152fb232150.N7e29" name="Stage1">
                 <con:context/>
@@ -236,7 +231,19 @@
                                         </con1:header>
                                     </con1:transport-headers>
                                 </con3:outboundTransform>
-                                <con3:responseTransform/>
+                                <con3:responseTransform>
+                                    <con1:replace varName="body" contents-only="true">
+                                        <con2:id>_ActionId-N3f57c7ff.N4150821e.0.152ff43f1c6.N7f8f</con2:id>
+                                        <con1:expr>
+                                            <con2:xqueryTransform>
+                                                <con2:resource ref="GoogleTasks/Transformations/TransformTasks"/>
+                                                <con2:param name="googleListOfTasks">
+                                                    <con2:path>$body/*[1]</con2:path>
+                                                </con2:param>
+                                            </con2:xqueryTransform>
+                                        </con1:expr>
+                                    </con1:replace>
+                                </con3:responseTransform>
                             </con3:route>
                         </con3:case>
                         <con3:case id="_BranchId-N3f574df6.51afe2ba.0.152fb232150.N7f9a">
@@ -281,7 +288,19 @@
                                         </con1:expr>
                                     </con1:insert>
                                 </con3:outboundTransform>
-                                <con3:responseTransform/>
+                                <con3:responseTransform>
+                                    <con1:replace varName="body" contents-only="true">
+                                        <con2:id>_ActionId-N3f57c7ff.N4150821e.0.152ff43f1c6.N7f5c</con2:id>
+                                        <con1:expr>
+                                            <con2:xqueryTransform>
+                                                <con2:resource ref="GoogleTasks/Transformations/TransformTask"/>
+                                                <con2:param name="googleTask">
+                                                    <con2:path>$body/*[1]</con2:path>
+                                                </con2:param>
+                                            </con2:xqueryTransform>
+                                        </con1:expr>
+                                    </con1:replace>
+                                </con3:responseTransform>
                             </con3:route>
                         </con3:case>
                         <con3:defaultCase>
