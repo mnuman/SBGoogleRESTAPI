@@ -134,7 +134,22 @@
                                         </con1:header>
                                     </con1:transport-headers>
                                 </con3:outboundTransform>
-                                <con3:responseTransform/>
+                                <con3:responseTransform>
+                                    <con1:replace varName="body" contents-only="true">
+                                        <con2:id>_ActionId-N3f57c7ff.N4150821e.0.152ff43f1c6.N7fcb</con2:id>
+                                        <con1:expr>
+                                            <con2:xqueryTransform>
+                                                <con2:resource ref="GoogleTasks/Transformations/TransformTaskLists"/>
+                                                <con2:param name="responseElementName">
+                                                    <con2:path>'GetTaskListRpy'</con2:path>
+                                                </con2:param>
+                                                <con2:param name="googleTaskLists">
+                                                    <con2:path>$body/*[1]</con2:path>
+                                                </con2:param>
+                                            </con2:xqueryTransform>
+                                        </con1:expr>
+                                    </con1:replace>
+                                </con3:responseTransform>
                             </con3:route>
                         </con3:case>
                         <con3:case id="_BranchId-N3f574df6.51afe2ba.0.152fb232150.N7fd9">
@@ -153,7 +168,18 @@
                                         </con1:header>
                                     </con1:transport-headers>
                                 </con3:outboundTransform>
-                                <con3:responseTransform/>
+                                <con3:responseTransform>
+                                    <con1:replace varName="body" contents-only="true">
+                                        <con2:id>_ActionId-N3f57c7ff.N4150821e.0.152ff43f1c6.N7fc8</con2:id>
+                                        <con1:expr>
+                                            <con2:xqueryText><![CDATA[<tsk:GetTaskListRpy>
+  <tsk:ID>{data($body//tas:id)}</tsk:ID>
+  <tsk:Title>{data($body//tas:title)}</tsk:Title>
+  <tsk:LastUpdated>{data($body//tas:updated)}</tsk:LastUpdated>
+</tsk:GetTaskListRpy>]]></con2:xqueryText>
+                                        </con1:expr>
+                                    </con1:replace>
+                                </con3:responseTransform>
                             </con3:route>
                         </con3:case>
                         <con3:case id="_BranchId-N3f574df6.51afe2ba.0.152fb232150.N7fd4">
@@ -180,7 +206,18 @@
                                         </con1:expr>
                                     </con1:replace>
                                 </con3:outboundTransform>
-                                <con3:responseTransform/>
+                                <con3:responseTransform>
+                                    <con1:replace varName="body" contents-only="true">
+                                        <con2:id>_ActionId-N3f57c7ff.N4150821e.0.152ff43f1c6.N7f92</con2:id>
+                                        <con1:expr>
+                                            <con2:xqueryText><![CDATA[<tsk:CreateTaskListRpy>
+  <tsk:ID>{data($body//tas:id)}</tsk:ID>
+  <tsk:Title>{data($body//tas:title)}</tsk:Title>
+  <tsk:LastUpdated>{data($body//tas:updated)}</tsk:LastUpdated>
+</tsk:CreateTaskListRpy>]]></con2:xqueryText>
+                                        </con1:expr>
+                                    </con1:replace>
+                                </con3:responseTransform>
                             </con3:route>
                         </con3:case>
                         <con3:case id="_BranchId-N3f574df6.51afe2ba.0.152fb232150.N7fcf">

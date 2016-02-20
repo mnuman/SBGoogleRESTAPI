@@ -16,7 +16,7 @@
         <ser:ws-policy>
             <ser:binding-mode>no-policies</ser:binding-mode>
         </ser:ws-policy>
-        <ser:invoke ref="GoogleTasks/Tasks" xsi:type="con:PipelineRef" xmlns:con="http://www.bea.com/wli/sb/pipeline/config"/>
+        <ser:invoke ref="GoogleTasks/Pipelines/Tasks" xsi:type="con:PipelineRef" xmlns:con="http://www.bea.com/wli/sb/pipeline/config"/>
         <ser:xqConfiguration>
             <ser:snippetVersion>1.0</ser:snippetVersion>
         </ser:xqConfiguration>
